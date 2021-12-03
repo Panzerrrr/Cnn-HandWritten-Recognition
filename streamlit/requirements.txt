@@ -1,6 +1,5 @@
 absl-py==1.0.0
 adal==1.2.7
-alabaster @ file:///home/ktietz/src/ci/alabaster_1611921544520/work
 altair==4.1.0
 anaconda-client==1.7.2
 anaconda-navigator==2.0.3
@@ -263,7 +262,7 @@ nose @ file:///tmp/build/80754af9/nose_1606773131901/work
 notebook @ file:///C:/ci/notebook_1616443715883/work
 numba @ file:///C:/ci/numba_1616774458845/work
 numexpr @ file:///C:/ci/numexpr_1618856738664/work
-numpy==1.19.1
+# numpy==1.19.1
 numpydoc @ file:///tmp/build/80754af9/numpydoc_1605117425582/work
 oauthlib==3.1.1
 olefile==0.46
@@ -272,8 +271,8 @@ openfoodfacts==0.1.2
 openpyxl @ file:///tmp/build/80754af9/openpyxl_1615411699337/work
 opt-einsum==3.3.0
 packaging @ file:///tmp/build/80754af9/packaging_1611952188834/work
-pandas==1.0.5
-pandas-profiling==3.0.0
+# pandas==1.0.5
+# pandas-profiling==3.0.0
 pandocfilters @ file:///C:/ci/pandocfilters_1605102497129/work
 paramiko @ file:///tmp/build/80754af9/paramiko_1598886428689/work
 parso==0.7.0
@@ -386,8 +385,8 @@ SQLAlchemy @ file:///C:/ci/sqlalchemy_1618090063261/work
 srsly==2.4.2
 statsmodels==0.12.2
 stopit==1.1.2
-streamlit==1.2.0
-streamlit-drawable-canvas==0.8.0
+# streamlit==1.2.0
+# streamlit-drawable-canvas==0.8.0
 sympy @ file:///C:/ci/sympy_1618255511605/work
 tables==3.6.1
 tangled-up-in-unicode==0.1.0
