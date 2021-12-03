@@ -209,7 +209,7 @@ canvas_result = st_canvas(
 file_path = "../img/img.png"
 
 if canvas_result.image_data is not None:
-    agree = st.button('prediction',on_click=make_prediction())
+    button_clicked = st.button('prediction',on_click=make_prediction())
 
     img_data = canvas_result.image_data
     im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
@@ -222,9 +222,8 @@ if canvas_result.image_data is not None:
     
 
 
-    if agree:
+    if button_clicked:
 
-        # new_img = make_prediction()
         batch = new_img
         conv = model.layers[0]
         activation = conv(batch)
@@ -247,30 +246,143 @@ if canvas_result.image_data is not None:
                 plt.imshow(f[j,:,:] ,cmap='gray')
                 ix+=1
         # save the fig
-        plt.savefig("../img/fig/Conv2D_1.png")
+        plt.savefig("../img/fig/{model.layers.name[0]}.png")
         # # plot the fig
         # plt.show()
 
         st.write('predction en cours')
-        image = Image.open('../img/fig/Conv2D_1.png')
+        image = Image.open('../img/fig/{model.layers.name[0]}.png')
         st.image(
             image,
-            caption='Conv2D_1',)
+            caption='model.layers.name[0]',)
 
-        image = Image.open('../img/fig/Activation_1.png')
-        st.image(
-            image,
-            caption='Activation_1',)
 
-        image = Image.open('../img/fig/MaxPooling2D_1.png')
-        st.image(
-            image,
-            caption='MaxPooling2D_1',)
+        conv1 = model.layers[1]
+        activation1 = conv1(activation)
+        # print(batch)
+        print(conv1)
+        print(activation1.shape)
 
-        image = Image.open('../img/img.png')
+        import matplotlib.pyplot as plt
+
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(20,15))
+        for i in range(20):
+            # get the filters
+            f = activation1[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,20,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='gray')
+                ix+=1
+        # save the fig
+        plt.savefig("../img/fig/{model.layers.name[1]}.png")
+        # # plot the fig
+        # plt.show()
+
+
+
+        image = Image.open('../img/fig/{model.layers.name[1]}.png')
         st.image(
             image,
-            caption='our test',)
+            caption='model.layers.name[1]',)
+
+
+        conv3 = model.layers[2]
+        activation2 = conv3(activation1)
+        # print(batch)
+        print(conv3)
+        print(activation2.shape)
+
+        import matplotlib.pyplot as plt
+
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(20,15))
+        for i in range(20):
+            # get the filters
+            f = activation2[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,20,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='gray')
+                ix+=1
+        # save the fig
+        plt.savefig("../img/fig/{model.layers.name[2]}.png")
+        # # plot the fig
+        # plt.show()
+
+        image = Image.open('../img/fig/{model.layers.name[2]}.png')
+        st.image(
+            image,
+            caption='model.layers.name[2]',)
+
+
+        conv3 = model.layers[3]
+        activation3 = conv3(activation2)
+        # print(batch)
+        print(conv3)
+        print(activation3.shape)
+
+        import matplotlib.pyplot as plt
+
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(20,15))
+        for i in range(20):
+            # get the filters
+            f = activation3[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,20,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='gray')
+                ix+=1
+        # save the fig
+        plt.savefig("../img/fig/{model.layers.name[3]}.png")
+        # # plot the fig
+        # plt.show()
+
+
+        image = Image.open('../img/fig/{model.layers.name[3]}.png')
+        st.image(
+            image,
+            caption='model.layers.name[3]',)
+
+
+        conv4 = model.layers[4]
+        activation4 = conv4(activation3)
+        # print(batch)
+        print(conv4)
+        print(activation4.shape)
+
+        import matplotlib.pyplot as plt
+
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(20,15))
+        for i in range(20):
+            # get the filters
+            f = activation4[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,20,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='gray')
+                ix+=1
+        # save the fig
+        plt.savefig("../img/fig/{model.layers.name[4]}.png")
+        # # plot the fig
+        # plt.show()
+
+
+        image = Image.open('../img/fig/{model.layers.name[4]}.png')
+        st.image(
+            image,
+            caption='model.layers.name[4]',)
 
     try:
         # some strings <-> bytes conversions necessary here
@@ -290,10 +402,34 @@ if canvas_result.image_data is not None:
 
 
 
+# def plot_nodes():
 
+#     for nodes in range(3):
+#         batch = new_img
+#         conv = model.layers[nodes]
+#         activation = conv(batch)
+#         # print(batch)
+#         print(conv)
+#         print(activation.shape)
 
+#         import matplotlib.pyplot as plt
 
-
+#         n_filters =6
+#         ix=1
+#         fig = plt.figure(figsize=(20,15))
+#         for i in range(20):
+#             # get the filters
+#             f = activation[:,:,:,i]
+#             for j in range(1):
+#                 # subplot for 6 filters and 3 channels
+#                 plt.subplot(1,20,ix)
+#                 plt.axis('off')
+#                 plt.imshow(f[j,:,:] ,cmap='gray')
+#                 ix+=1
+#         # save the fig
+#         plt.savefig("../img/fig/{model.layers.name}.png")
+#         # # plot the fig
+#         # plt.show()
 
 
 
