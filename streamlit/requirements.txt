@@ -9,4 +9,6 @@ tensorflow==2.7.0
 tensorflow-estimator==2.7.0
 tensorflow-io-gcs-filesystem==0.22.0
 matplotlib==3.3.4
-opencv-python==4.5.4.58
+opencv-python==4.5.4.60
+skia-python==87.3
+pybind11==2.8.1
