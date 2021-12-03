@@ -8,3 +8,4 @@ Keras-Preprocessing==1.1.2
 tensorflow==2.7.0
 tensorflow-estimator==2.7.0
 tensorflow-io-gcs-filesystem==0.22.0
+matplotlib==3.3.4
