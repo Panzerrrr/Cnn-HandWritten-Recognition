@@ -3,7 +3,6 @@ streamlit==1.2.0
 streamlit-drawable-canvas==0.8.0
 numpy==1.19.1
 pandas==1.0.5
-matplotlib @ file:///C:/ci/matplotlib-suite_1613408055530/work
 keras==2.7.0
 Keras-Preprocessing==1.1.2
 tensorflow==2.7.0
