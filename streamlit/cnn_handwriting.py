@@ -23,50 +23,91 @@ import streamlit as st
 from PIL import Image
 from streamlit_drawable_canvas import st_canvas
 
+import matplotlib.pyplot as plt
+
 
 
 import SessionState
 
 
-# def main():
-#     if 'button_id' not in st.session_state:
-#         st.session_state['button_id'] = ''
-#     if 'color_to_label' not in st.session_state:
-#         st.session_state['color_to_label'] = {}
-#     PAGES = {
-#         "About": about,
-#         "Basic example": full_app,
-#         "Get center coords of circles": center_circle_app,
-#         "Color-based image annotation": color_annotation_app,
-#         "Download Base64 encoded PNG": png_export,
-#         "Compute the length of drawn arcs": compute_arc_length,
-#     }
-#     page = st.sidebar.selectbox("Page:", options=list(PAGES.keys()))
-#     PAGES[page]()
 
-#     with st.sidebar:
-#         st.markdown("---")
-#         st.markdown(
-#             '<h6>Made in &nbsp<img src="https://streamlit.io/images/brand/streamlit-mark-color.png" alt="Streamlit logo" height="16">&nbsp by <a href="https://twitter.com/andfanilo">@andfanilo</a></h6>',
-#             unsafe_allow_html=True,
-#         )
-#         st.markdown(
-#             '<div style="margin: 0.75em 0;"><a href="https://www.buymeacoffee.com/andfanilo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a></div>',
-#             unsafe_allow_html=True,
-#         )
+
+     ################################################# PREDICT #########################################################
 
 
 
+from keras.models import load_model
+
+# load model after export
+
+import pickle
+
+X_train = pickle.load(open("../pickle/X_train.sav", 'rb'))
+X_test = pickle.load(open("../pickle/X_test.sav", 'rb'))
+Y_train = pickle.load(open("../pickle/Y_train.sav", 'rb'))
+Y_test = pickle.load(open("../pickle/Y_test.sav", 'rb'))
+
+# predictions = model.predict([X_test])
+# print(predictions)
+
+# pip install opencv_python
+import cv2
+import matplotlib.pyplot as plt
+# img = cv2.imread('../img/img.png')
+# plt.imshow(img)
+
+# # print(img.shape)
+
+# gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# # print(gray.shape)
+
+# resize = cv2.resize(gray, (28,28),interpolation=cv2.INTER_AREA)
+# resize.shape
+# print(plt.imshow(resize))
+
+
+import tensorflow as tf
+import numpy as np
+
+# IMG_SIZE = 28
+
+# new_img = tf.keras.utils.normalize(resize,axis=1)
+# new_img = np.array(new_img).reshape(-1,IMG_SIZE,IMG_SIZE,1)
+# print(new_img.shape)
+
+
+# pred = model.predict(new_img)
+# print(pred)
+
+
+# print(np.argsort(pred))
+model = load_model('../notebook/my_model.h5')
 
 
 
+def make_prediction():
+    global img
+    global new_img
+    predictions = model.predict([X_test]) 
+    img = cv2.imread('../img/img.png')   
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)    
+    resize = cv2.resize(gray, (28,28),interpolation=cv2.INTER_AREA)
+    IMG_SIZE = 28
+
+    new_img = tf.keras.utils.normalize(resize,axis=1)
+    new_img = np.array(new_img).reshape(-1,IMG_SIZE,IMG_SIZE,1)
+    print(new_img.shape)
+    pred = model.predict(new_img)
+    print(pred)
+    print(np.argsort(pred))
+
+    # return new_img
 
 
 
+######################################### APP ##############################################################
 
-# from svgpathtools import parse_path
 
-# import SessionState
 
 # Specify canvas parameters in application
 stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
@@ -92,121 +133,84 @@ canvas_result = st_canvas(
     key="canvas",
 )
 
-# Do something interesting with the image data and paths
-# if canvas_result.image_data is not None:
-#     if st.button('save'):
-#         st.write('Saved')
-#         st.image(canvas_result.image_data)
-#         print('DATAIMG',type(canvas_result.image_data))
-#         # im = Image.fromarray(canvas_result.image_data) 
-#         im = Image.fromarray((canvas_result.image_data * 255).astype(np.uint8))
-#         im.save("../streamlit/saved.png")
-
-
-def png_export():
-    st.markdown(
-        """
-    Realtime update is disabled for this demo. 
-    Press the 'Download' button at the bottom of canvas to update exported image.
-    """
-    )
-    try:
-        Path("../img/img").mkdir()
-    except FileExistsError:
-        pass
-
-    # Regular deletion of tmp files
-    # Hopefully callback makes this better
-    now = time.time()
-    N_HOURS_BEFORE_DELETION = 1
-    for f in Path("../img/img").glob("*.png"):
-        st.write(f, os.stat(f).st_mtime, now)
-        if os.stat(f).st_mtime < now - N_HOURS_BEFORE_DELETION * 3600:
-            Path.unlink(f)
-
-    # if st.session_state["button_id"] == "":
-    #     st.session_state["button_id"] = re.sub("\d+", "", str(uuid.uuid4()).replace("-", ""))
-
-    # button_id = st.session_state["button_id"]
-    file_path = "../img/img.png"
-
-    # custom_css = f""" 
-    #     <style>
-    #         #{button_id} {{
-    #             display: inline-flex;
-    #             align-items: center;
-    #             justify-content: center;
-    #             background-color: rgb(255, 255, 255);
-    #             color: rgb(38, 39, 48);
-    #             padding: .25rem .75rem;
-    #             position: relative;
-    #             text-decoration: none;
-    #             border-radius: 4px;
-    #             border-width: 1px;
-    #             border-style: solid;
-    #             border-color: rgb(230, 234, 241);
-    #             border-image: initial;
-    #         }} 
-    #         #{button_id}:hover {{
-    #             border-color: rgb(246, 51, 102);
-    #             color: rgb(246, 51, 102);
-    #         }}
-    #         #{button_id}:active {{
-    #             box-shadow: none;
-    #             background-color: rgb(246, 51, 102);
-    #             color: white;
-    #             }}
-    #     </style> """
-
-    data = st_canvas(update_streamlit=False, key="png_export")
-    if data is not None and data.image_data is not None:
-        img_data = data.image_data
-        im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
-        im.save(file_path, "PNG")
-
-        buffered = BytesIO()
-        im.save(buffered, format="PNG")
-        img_data = buffered.getvalue()
-        try:
-            # some strings <-> bytes conversions necessary here
-            b64 = base64.b64encode(img_data.encode()).decode()
-        except AttributeError:
-            b64 = base64.b64encode(img_data).decode()
-
-        dl_link = (f'<a download="{file_path}" href="data:file/txt;base64,{b64}">Export PNG</a><br></br>'
-        )
-        st.markdown(dl_link, unsafe_allow_html=True)
-
-
-# png_export()
-
-# data = st_canvas(update_streamlit=False, key="png_export")
-# if data is not None and data.image_data is not None:
-#     file_path = "../img/img"
-#     img_data = data.image_data
-#     im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
-#     im.save(file_path, "PNG")
-
-#     buffered = BytesIO()
-#     im.save(buffered, format="PNG")
-#     img_data = buffered.getvalue()
-#     try:
-#         # some strings <-> bytes conversions necessary here
-#         b64 = base64.b64encode(img_data.encode()).decode()
-#     except AttributeError:
-#         b64 = base64.b64encode(img_data).decode()
-
-#     dl_link = (
-#         custom_css
-#         + f'<a download="{file_path}" id="{button_id}" href="data:file/txt;base64,{b64}">Export PNG</a><br></br>'
+# def png_export():
+#     st.markdown(
+#         """
+#     Realtime update is disabled for this demo. 
+#     Press the 'Download' button at the bottom of canvas to update exported image.
+#     """
 #     )
-#     st.markdown(dl_link, unsafe_allow_html=True)
+#     try:
+#         Path("../img/img").mkdir()
+#     except FileExistsError:
+#         pass
+
+#     # Regular deletion of tmp files
+#     # Hopefully callback makes this better
+#     now = time.time()
+#     N_HOURS_BEFORE_DELETION = 1
+#     for f in Path("../img/img").glob("*.png"):
+#         st.write(f, os.stat(f).st_mtime, now)
+#         if os.stat(f).st_mtime < now - N_HOURS_BEFORE_DELETION * 3600:
+#             Path.unlink(f)
+
+#     # button_id = st.session_state["button_id"]
+#     file_path = "../img/img.png"
+
+#     # custom_css = f""" 
+#     #     <style>
+#     #         #{button_id} {{
+#     #             display: inline-flex;
+#     #             align-items: center;
+#     #             justify-content: center;
+#     #             background-color: rgb(255, 255, 255);
+#     #             color: rgb(38, 39, 48);
+#     #             padding: .25rem .75rem;
+#     #             position: relative;
+#     #             text-decoration: none;
+#     #             border-radius: 4px;
+#     #             border-width: 1px;
+#     #             border-style: solid;
+#     #             border-color: rgb(230, 234, 241);
+#     #             border-image: initial;
+#     #         }} 
+#     #         #{button_id}:hover {{
+#     #             border-color: rgb(246, 51, 102);
+#     #             color: rgb(246, 51, 102);
+#     #         }}
+#     #         #{button_id}:active {{
+#     #             box-shadow: none;
+#     #             background-color: rgb(246, 51, 102);
+#     #             color: white;
+#     #             }}
+#     #     </style> """
+
+#     # data = st_canvas(update_streamlit=False, key="png_export")
+#     # if data is not None and data.image_data is not None:
+#     #     img_data = data.image_data
+#     #     im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
+#     #     im.save(file_path, "PNG")
+
+#     #     buffered = BytesIO()
+#     #     im.save(buffered, format="PNG")
+#     #     img_data = buffered.getvalue()
+#     #     try:
+#     #         # some strings <-> bytes conversions necessary here
+#     #         b64 = base64.b64encode(img_data.encode()).decode()
+#     #     except AttributeError:
+#     #         b64 = base64.b64encode(img_data).decode()
+
+#     #     dl_link = (f'<a download="{file_path}" href="data:file/txt;base64,{b64}">Export PNG</a><br></br>'
+#     #     )
+#     #     st.markdown(dl_link, unsafe_allow_html=True)
 
 
 # data = st_canvas(update_streamlit=False, key="png_export")
 file_path = "../img/img.png"
 
 if canvas_result.image_data is not None:
+    agree = st.button('prediction',on_click=make_prediction())
+
     img_data = canvas_result.image_data
     im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
     im.save(file_path, "PNG")
@@ -215,47 +219,96 @@ if canvas_result.image_data is not None:
     buffered = BytesIO()
     im.save(buffered, format="PNG")
     img_data = buffered.getvalue()
+    
+
+
+    if agree:
+
+        # new_img = make_prediction()
+        batch = new_img
+        conv = model.layers[0]
+        activation = conv(batch)
+        # print(batch)
+        print(conv)
+        print(activation.shape)
+
+        import matplotlib.pyplot as plt
+
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(20,15))
+        for i in range(20):
+            # get the filters
+            f = activation[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,20,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='gray')
+                ix+=1
+        # save the fig
+        plt.savefig("../img/fig/Conv2D_1.png")
+        # # plot the fig
+        # plt.show()
+
+        st.write('predction en cours')
+        image = Image.open('../img/fig/Conv2D_1.png')
+        st.image(
+            image,
+            caption='Conv2D_1',)
+
+        image = Image.open('../img/fig/Activation_1.png')
+        st.image(
+            image,
+            caption='Activation_1',)
+
+        image = Image.open('../img/fig/MaxPooling2D_1.png')
+        st.image(
+            image,
+            caption='MaxPooling2D_1',)
+
+        image = Image.open('../img/img.png')
+        st.image(
+            image,
+            caption='our test',)
+
     try:
         # some strings <-> bytes conversions necessary here
         b64 = base64.b64encode(img_data.encode()).decode()
     except AttributeError:
         b64 = base64.b64encode(img_data).decode()
 
-    dl_link = (f'<a download="{file_path}" href="data:file/txt;base64,{b64}">Export PNG</a><br></br>'
-    )
-    st.markdown(dl_link, unsafe_allow_html=True)
+    # dl_link = (f'<a download="{file_path}" onclick="{make_prediction()}" href="data:file/txt;base64,{b64}">Export PNG</a><br></br>'
+    # )
 
-
-
-
-
-
-
-
-image = Image.open('../img/fig/Conv2D_1.png')
-st.image(
-    image,
-    caption='Conv2D_1',)
-
-image = Image.open('../img/fig/Activation_1.png')
-st.image(
-    image,
-    caption='Activation_1',)
-
-image = Image.open('../img/fig/MaxPooling2D_1.png')
-st.image(
-    image,
-    caption='MaxPooling2D_1',)
-
-image = Image.open('../img/img.png')
-st.image(
-    image,
-    caption='our test',)
     
-# if canvas_result.json_data is not None:
-#     objects = pd.json_normalize(canvas_result.json_data["objects"]) # need to convert obj to str because PyArrow
-#     for col in objects.select_dtypes(include=['object']).columns:
-#         objects[col] = objects[col].astype("str")
-#     st.dataframe(objects)
+    # st.markdown(dl_link, unsafe_allow_html=True)
 
-# print('NEWWW',type(canvas_result.image_data))
+
+
+    ############################################## PLOT ###############################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
