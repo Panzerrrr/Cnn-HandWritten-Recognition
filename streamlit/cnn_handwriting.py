@@ -11,20 +11,12 @@ import time
 import base64
 import os
 import time
-from io import BytesIO
-from pathlib import Path
 
-import numpy as np
 import pandas as pd
-import streamlit as st
-from PIL import Image
-from streamlit_drawable_canvas import st_canvas
 
 import matplotlib.pyplot as plt
 
 
-
-import SessionState
 
 
 
@@ -49,7 +41,6 @@ Y_test = pickle.load(open("../pickle/Y_test.sav", 'rb'))
 
 # pip install opencv_python
 import cv2
-import matplotlib.pyplot as plt
 # img = cv2.imread('../img/img.png')
 # plt.imshow(img)
 
@@ -64,7 +55,6 @@ import matplotlib.pyplot as plt
 
 
 import tensorflow as tf
-import numpy as np
 
 # IMG_SIZE = 28
 
@@ -228,7 +218,6 @@ if canvas_result.image_data is not None:
         print(conv)
         print(activation.shape)
 
-        import matplotlib.pyplot as plt
 
         n_filters =6
         ix=1
@@ -259,8 +248,6 @@ if canvas_result.image_data is not None:
         # print(batch)
         print(conv1)
         print(activation1.shape)
-
-        import matplotlib.pyplot as plt
 
         n_filters =6
         ix=1
@@ -293,8 +280,6 @@ if canvas_result.image_data is not None:
         print(conv3)
         print(activation2.shape)
 
-        import matplotlib.pyplot as plt
-
         n_filters =6
         ix=1
         fig = plt.figure(figsize=(20,15))
@@ -324,7 +309,6 @@ if canvas_result.image_data is not None:
         print(conv3)
         print(activation3.shape)
 
-        import matplotlib.pyplot as plt
 
         n_filters =6
         ix=1
@@ -356,7 +340,6 @@ if canvas_result.image_data is not None:
         print(conv4)
         print(activation4.shape)
 
-        import matplotlib.pyplot as plt
 
         n_filters =6
         ix=1
