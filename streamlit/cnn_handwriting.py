@@ -31,10 +31,6 @@ from keras.models import load_model
 
 import pickle
 
-X_train = pickle.load(open("../pickle/X_train.sav", 'rb'))
-X_test = pickle.load(open("../pickle/X_test.sav", 'rb'))
-Y_train = pickle.load(open("../pickle/Y_train.sav", 'rb'))
-Y_test = pickle.load(open("../pickle/Y_test.sav", 'rb'))
 
 # predictions = model.predict([X_test])
 # print(predictions)
