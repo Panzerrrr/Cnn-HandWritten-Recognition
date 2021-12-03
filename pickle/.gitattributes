@@ -1,2 +1,0 @@
-*.sav filter=lfs diff=lfs merge=lfs -text
-X_train.sav filter=lfs diff=lfs merge=lfs -text
