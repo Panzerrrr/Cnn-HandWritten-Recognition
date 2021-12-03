@@ -387,7 +387,7 @@ srsly==2.4.2
 statsmodels==0.12.2
 stopit==1.1.2
 streamlit==1.2.0
-streamlit-drawable-canvas==0.8.0
+streamlit_drawable_canvas==0.8.0
 sympy @ file:///C:/ci/sympy_1618255511605/work
 tables==3.6.1
 tangled-up-in-unicode==0.1.0
