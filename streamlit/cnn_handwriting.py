@@ -172,126 +172,126 @@ if canvas_result.image_data is not None:
             caption='mod1',)
 
 
-        # conv1 = model.layers[1]
-        # activation1 = conv1(activation)
-        # # print(batch)
-        # print(conv1)
-        # print(activation1.shape)
+        conv1 = model.layers[1]
+        activation1 = conv1(activation)
+        # print(batch)
+        print(conv1)
+        print(activation1.shape)
 
-        # n_filters =6
-        # ix=1
-        # fig = plt.figure(figsize=(20,15))
-        # for i in range(20):
-        #     # get the filters
-        #     f = activation1[:,:,:,i]
-        #     for j in range(1):
-        #         # subplot for 6 filters and 3 channels
-        #         plt.subplot(1,20,ix)
-        #         plt.axis('off')
-        #         plt.imshow(f[j,:,:] ,cmap='gray')
-        #         ix+=1
-        # # save the fig
-        # plt.savefig("../img/fig/{model.layers.name[1]}.png")
-        # # # plot the fig
-        # # plt.show()
-
-
-
-        # image = Image.open('../img/fig/{model.layers.name[1]}.png')
-        # st.image(
-        #     image,
-        #     caption='model.layers.name[1]',)
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(20,15))
+        for i in range(20):
+            # get the filters
+            f = activation1[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,20,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='gray')
+                ix+=1
+        # save the fig
+        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod2.png'))
+        # # plot the fig
+        # plt.show()
 
 
-        # conv3 = model.layers[2]
-        # activation2 = conv3(activation1)
-        # # print(batch)
-        # print(conv3)
-        # print(activation2.shape)
 
-        # n_filters =6
-        # ix=1
-        # fig = plt.figure(figsize=(20,15))
-        # for i in range(20):
-        #     # get the filters
-        #     f = activation2[:,:,:,i]
-        #     for j in range(1):
-        #         # subplot for 6 filters and 3 channels
-        #         plt.subplot(1,20,ix)
-        #         plt.axis('off')
-        #         plt.imshow(f[j,:,:] ,cmap='gray')
-        #         ix+=1
-        # # save the fig
-        # plt.savefig("../img/fig/{model.layers.name[2]}.png")
-        # # # plot the fig
-        # # plt.show()
-
-        # image = Image.open('../img/fig/{model.layers.name[2]}.png')
-        # st.image(
-        #     image,
-        #     caption='model.layers.name[2]',)
+        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod2.png'))
+        st.image(
+            image,
+            caption='mod2',)
 
 
-        # conv3 = model.layers[3]
-        # activation3 = conv3(activation2)
-        # # print(batch)
-        # print(conv3)
-        # print(activation3.shape)
+        conv3 = model.layers[2]
+        activation2 = conv3(activation1)
+        # print(batch)
+        print(conv3)
+        print(activation2.shape)
+
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(20,15))
+        for i in range(20):
+            # get the filters
+            f = activation2[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,20,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='gray')
+                ix+=1
+        # save the fig
+        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod3.png'))
+        # # plot the fig
+        # plt.show()
+
+        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod3.png'))
+        st.image(
+            image,
+            caption='mod3',)
 
 
-        # n_filters =6
-        # ix=1
-        # fig = plt.figure(figsize=(20,15))
-        # for i in range(20):
-        #     # get the filters
-        #     f = activation3[:,:,:,i]
-        #     for j in range(1):
-        #         # subplot for 6 filters and 3 channels
-        #         plt.subplot(1,20,ix)
-        #         plt.axis('off')
-        #         plt.imshow(f[j,:,:] ,cmap='gray')
-        #         ix+=1
-        # # save the fig
-        # plt.savefig("../img/fig/{model.layers.name[3]}.png")
-        # # # plot the fig
-        # # plt.show()
+        conv3 = model.layers[3]
+        activation3 = conv3(activation2)
+        # print(batch)
+        print(conv3)
+        print(activation3.shape)
 
 
-        # image = Image.open('../img/fig/{model.layers.name[3]}.png')
-        # st.image(
-        #     image,
-        #     caption='model.layers.name[3]',)
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(20,15))
+        for i in range(20):
+            # get the filters
+            f = activation3[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,20,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='gray')
+                ix+=1
+        # save the fig
+        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod4.png'))
+        # # plot the fig
+        # plt.show()
 
 
-        # conv4 = model.layers[4]
-        # activation4 = conv4(activation3)
-        # # print(batch)
-        # print(conv4)
-        # print(activation4.shape)
+        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod4.png'))
+        st.image(
+            image,
+            caption='mod4',)
 
 
-        # n_filters =6
-        # ix=1
-        # fig = plt.figure(figsize=(20,15))
-        # for i in range(20):
-        #     # get the filters
-        #     f = activation4[:,:,:,i]
-        #     for j in range(1):
-        #         # subplot for 6 filters and 3 channels
-        #         plt.subplot(1,20,ix)
-        #         plt.axis('off')
-        #         plt.imshow(f[j,:,:] ,cmap='gray')
-        #         ix+=1
-        # # save the fig
-        # plt.savefig("../img/fig/{model.layers.name[4]}.png")
-        # # # plot the fig
-        # # plt.show()
+        conv4 = model.layers[4]
+        activation4 = conv4(activation3)
+        # print(batch)
+        print(conv4)
+        print(activation4.shape)
 
 
-        # image = Image.open('../img/fig/{model.layers.name[4]}.png')
-        # st.image(
-        #     image,
-        #     caption='model.layers.name[4]',)
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(20,15))
+        for i in range(20):
+            # get the filters
+            f = activation4[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,20,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='gray')
+                ix+=1
+        # save the fig
+        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.png'))
+        # # plot the fig
+        # plt.show()
+
+
+        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.png'))
+        st.image(
+            image,
+            caption='mod5',)
 
     try:
         # some strings <-> bytes conversions necessary here
@@ -308,19 +308,3 @@ if canvas_result.image_data is not None:
 
 
     ############################################## PLOT ###############################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
