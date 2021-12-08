@@ -26,59 +26,9 @@ import matplotlib.pyplot as plt
 from tensorflow import keras
 from tensorflow.keras.utils import *
 
-# from keras.models import load_model
-
-# load model after export
-
-import pickle   
-
-
-# predictions = model.predict([X_test])
-# print(predictions)
-
-# pip install opencv_python
-# import cv2
-# img = cv2.imread('../img/img.png')
-# plt.imshow(img)
-
-# # print(img.shape)
-
-# gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-# # print(gray.shape)
-
-# resize = cv2.resize(gray, (28,28),interpolation=cv2.INTER_AREA)
-# resize.shape
-# print(plt.imshow(resize))
 
 
 import tensorflow as tf
-
-# IMG_SIZE = 28
-
-# new_img = tf.keras.utils.normalize(resize,axis=1)keras
-# new_img = np.array(new_img).reshape(-1,IMG_SIZE,IMG_SIZE,1)
-# print(new_img.shape)
-
-
-# pred = model.predict(new_img)
-# print(pred)
-
-
-# print(np.argsort(pred))
-# MODEL_DIR = os.path.join(os.path.dirname('__file__'), 'my_model.h5')
-# model = load_model('C:\Users\Simplon\projets\Cnn-HandWritten-Recognition\streamlit\my_model.h5')
-# model = load_model(MODEL_DIR)
-# model = load_model('my_model.h5')
-
-# MODEL_DIR = os.path.join(os.path.dirname(__file__), 'my_model.h5')
-# if not os.path.isdir(MODEL_DIR):
-#     os.system(r'my_model.h5')
-# model = load_model(r'my_model.h5')
-
-
-# MODEL_DIR = os.path.join(os.path.dirname('__file__'), 'my_model.h5')
-# if not os.path.isdir(MODEL_DIR):
-#     os.system('runipy train.ipynb')
 
 MODEL_DIR = os.path.join(os.path.dirname('__file__'), 'my_model.h5')
 model = keras.models.load_model(MODEL_DIR)
