@@ -54,7 +54,7 @@ import tensorflow as tf
 
 # IMG_SIZE = 28
 
-# new_img = tf.keras.utils.normalize(resize,axis=1)
+# new_img = tf.keras.utils.normalize(resize,axis=1)keras
 # new_img = np.array(new_img).reshape(-1,IMG_SIZE,IMG_SIZE,1)
 # print(new_img.shape)
 
@@ -64,7 +64,9 @@ import tensorflow as tf
 
 
 # print(np.argsort(pred))
-model = load_model('my_model.h5')
+MODEL_DIR = os.path.join(os.path.dirname('__file__'), 'first_model.h5')
+model = load_model(MODEL_DIR)
+# model = load_model('my_model.h5')
 
 
 
