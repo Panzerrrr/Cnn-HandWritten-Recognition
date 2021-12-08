@@ -75,46 +75,13 @@ import tensorflow as tf
 # model = load_model(r'my_model.h5')
 
 
-MODEL_DIR = os.path.join(os.path.dirname('__file__'), 'my_model.h5')
-if not os.path.isdir(MODEL_DIR):
-    os.system('runipy train.ipynb')
+# MODEL_DIR = os.path.join(os.path.dirname('__file__'), 'my_model.h5')
+# if not os.path.isdir(MODEL_DIR):
+#     os.system('runipy train.ipynb')
 
 model = os.path.join(os.path.dirname('__file__'), 'my_model.h5')
 
 
-def make_prediction():
-    global img
-    global new_img
-    # predictions = model.predict([X_test]) 
-    # img = cv2.imread('../img/img.png')   
-    # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)    
-    # resize = cv2.resize(gray, (28,28),interpolation=cv2.INTER_AREA)
-    # IMG_SIZE = 28
-
-    # new_img = tf.keras.utils.normalize(resize,axis=1)
-    # new_img = np.array(new_img).reshape(-1,IMG_SIZE,IMG_SIZE,1)
-    # print(new_img.shape)
-    # pred = model.predict(new_img)
-    # print(pred)
-    # print(np.argsort(pred))
-
-
-    img = canvas_result.image_data
-    
-    image_data = Image.fromarray((img[:, :, 0]).astype(np.uint8))
-    image_data = image_data.resize((28, 28))
-    image_data = image_data.convert('L')
-    image_data = (tf.keras.utils.img_to_array(image_data)/255)
-    image_data = image_data.reshape(1,28,28,1)
-    new_img = tf.convert_to_tensor(image_data)
-    
-
-       # print(new_img.shape)
-    pred = model.predict(new_img)
-    print(pred)
-    print(np.argsort(pred))
-
-    # return new_img
 
 
 
@@ -145,6 +112,40 @@ canvas_result = st_canvas(
     drawing_mode=drawing_mode,
     key="canvas",
 )
+
+
+def make_prediction(img):
+    global new_img
+    # predictions = model.predict([X_test]) 
+    # img = cv2.imread('../img/img.png')   
+    # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)    
+    # resize = cv2.resize(gray, (28,28),interpolation=cv2.INTER_AREA)
+    # IMG_SIZE = 28
+
+    # new_img = tf.keras.utils.normalize(resize,axis=1)
+    # new_img = np.array(new_img).reshape(-1,IMG_SIZE,IMG_SIZE,1)
+    # print(new_img.shape)
+    # pred = model.predict(new_img)
+    # print(pred)
+    # print(np.argsort(pred))
+
+
+    img = canvas_result.image_data
+    
+    image_data = Image.fromarray((img[:, :, 0]).astype(np.uint8))
+    image_data = image_data.resize((28, 28))
+    image_data = image_data.convert('L')
+    image_data = (tf.keras.utils.img_to_array(image_data)/255)
+    image_data = image_data.reshape(1,28,28,1)
+    new_img = tf.convert_to_tensor(image_data)
+    
+
+    # print(new_img.shape)
+    pred = model.predict(new_img)
+    print(pred)
+    print(np.argsort(pred))
+
+        # return new_img
 
 # def png_export():
 #     st.markdown(
@@ -222,7 +223,8 @@ canvas_result = st_canvas(
 file_path = "../img/img.png"
 
 if canvas_result.image_data is not None:
-    button_clicked = st.button('prediction',on_click=make_prediction())
+    img = canvas_result.image_data
+    button_clicked = st.button('prediction',on_click=make_prediction(img))
 
     # img_data = canvas_result.image_data
     # im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
@@ -234,13 +236,13 @@ if canvas_result.image_data is not None:
     # img_data = buffered.getvalue()
 
 
-    img = canvas_result.image_data
+   
     
-    image_data = Image.fromarray((img[:, :, 0]).astype(np.uint8))
-    image_data = image_data.resize((28, 28))
-    image_data = image_data.convert('L')
-    image_data = (tf.keras.utils.img_to_array(image_data)/255)
-    image_data = image_data.reshape(1,28,28,1)
+    # image_data = Image.fromarray((img[:, :, 0]).astype(np.uint8))
+    # image_data = image_data.resize((28, 28))
+    # image_data = image_data.convert('L')
+    # image_data = (tf.keras.utils.img_to_array(image_data)/255)
+    # image_data = image_data.reshape(1,28,28,1)
     # test_x = tf.convert_to_tensor(image_data)
     
     
