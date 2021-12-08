@@ -5,7 +5,6 @@ from streamlit_drawable_canvas import st_canvas
 import numpy as np
 from io import BytesIO
 from pathlib import Path
-import os
 import time
 
 import base64
@@ -24,8 +23,10 @@ import matplotlib.pyplot as plt
      ################################################# PREDICT #########################################################
 
 
+from tensorflow import keras
+from tensorflow.keras.utils import *
 
-from keras.models import load_model
+# from keras.models import load_model
 
 # load model after export
 
@@ -79,8 +80,8 @@ import tensorflow as tf
 # if not os.path.isdir(MODEL_DIR):
 #     os.system('runipy train.ipynb')
 
-MODEL_DIR = os.path.join(os.path.listdir('__file__'), 'my_model.h5')
-model = load_model(MODEL_DIR)
+MODEL_DIR = os.path.join(os.path.dirname('__file__'), 'my_model.h5')
+model = keras.models.load_model(MODEL_DIR)
 
 
 
