@@ -69,9 +69,9 @@ import tensorflow as tf
 # model = load_model(MODEL_DIR)
 # model = load_model('my_model.h5')
 
-MODEL_DIR = os.path.join(os.path.path_to_file(__file__), 'my_model.h5')
-if not os.path.isFile(MODEL_DIR):
-    os.system('runipy train.ipynb')
+# MODEL_DIR = os.path.join(os.path.path_to_file(__file__), 'my_model.h5')
+# if not os.path.isFile(MODEL_DIR):
+#     os.system('runipy train.ipynb')
 model = load_model(r'C:\Users\Simplon\projets\Cnn-HandWritten-Recognition\streamlit\my_model.h5')
 
 # os.path.isfile
