@@ -79,7 +79,8 @@ import tensorflow as tf
 # if not os.path.isdir(MODEL_DIR):
 #     os.system('runipy train.ipynb')
 
-model = os.path.join(os.path.dirname('__file__'), 'my_model.h5')
+model = load_model(os.path.join(os.path.dirname('__file__'), 'my_model.h5'))
+
 
 
 
@@ -114,8 +115,9 @@ canvas_result = st_canvas(
 )
 
 
-def make_prediction(img):
+def make_prediction():
     global new_img
+    global img
     # predictions = model.predict([X_test]) 
     # img = cv2.imread('../img/img.png')   
     # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)    
@@ -224,7 +226,7 @@ file_path = "../img/img.png"
 
 if canvas_result.image_data is not None:
     img = canvas_result.image_data
-    button_clicked = st.button('prediction',on_click=make_prediction(img))
+    button_clicked = st.button('prediction',on_click=make_prediction())
 
     # img_data = canvas_result.image_data
     # im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
@@ -415,9 +417,9 @@ if canvas_result.image_data is not None:
 
     try:
         # some strings <-> bytes conversions necessary here
-        b64 = base64.b64encode(image_data.encode()).decode()
+        b64 = base64.b64encode(new_img.encode()).decode()
     except AttributeError:
-        b64 = base64.b64encode(image_data).decode()
+        b64 = base64.b64encode(new_img).decode()
 
     # dl_link = (f'<a download="{file_path}" onclick="{make_prediction()}" href="data:file/txt;base64,{b64}">Export PNG</a><br></br>'
     # )
