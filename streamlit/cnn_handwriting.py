@@ -153,7 +153,7 @@ if canvas_result.image_data is not None:
                 plt.imshow(f[j,:,:] ,cmap='gray')
                 ix+=1
         # save the fig
-        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1.svg'),format='svg')
+        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1.svg'))
         # # plot the fig
         # plt.show()
 
@@ -191,7 +191,7 @@ if canvas_result.image_data is not None:
                 plt.imshow(f[j,:,:] ,cmap='gray')
                 ix+=1
         # save the fig
-        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod2.svg'),format='svg')
+        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod2.svg'))
         # # plot the fig
         # plt.show()
 
@@ -222,7 +222,7 @@ if canvas_result.image_data is not None:
                 plt.imshow(f[j,:,:] ,cmap='gray')
                 ix+=1
         # save the fig
-        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod3.svg'),format='svg')
+        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod3.svg'))
         # # plot the fig
         # plt.show()
 
@@ -252,7 +252,7 @@ if canvas_result.image_data is not None:
                 plt.imshow(f[j,:,:] ,cmap='gray')
                 ix+=1
         # save the fig
-        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod4.svg'),format='svg')
+        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod4.svg'))
         # # plot the fig
         # plt.show()
 
@@ -283,7 +283,7 @@ if canvas_result.image_data is not None:
                 plt.imshow(f[j,:,:] ,cmap='gray')
                 ix+=1
         # save the fig
-        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.svg'),format='svg')
+        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.svg'))
         # # plot the fig
         # plt.show()
 
