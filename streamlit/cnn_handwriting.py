@@ -36,7 +36,7 @@ import pickle
 # print(predictions)
 
 # pip install opencv_python
-import cv2
+# import cv2
 # img = cv2.imread('../img/img.png')
 # plt.imshow(img)
 
