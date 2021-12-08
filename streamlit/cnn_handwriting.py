@@ -317,6 +317,35 @@ if canvas_result.image_data is not None:
         #     image,
         #     caption='mod5',)
 
+
+
+
+
+        conv5 = model.layers[5]
+        activation5 = conv5(activation4)
+        # print(batch)
+        print(conv5)
+        print(activation5.shape)
+
+
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(20,15))
+        for i in range(20):
+            # get the filters
+            f = activation5[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,20,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='gray')
+                ix+=1
+        # save the fig
+        # plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.png'))
+        # # plot the fig
+        # plt.show()
+        st.pyplot(fig)
+
     try:
         # some strings <-> bytes conversions necessary here
         b64 = base64.b64encode(new_img.encode()).decode()
