@@ -153,7 +153,7 @@ if canvas_result.image_data is not None:
                 plt.imshow(f[j,:,:] ,cmap='gray')
                 ix+=1
         # save the fig
-        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1.svg'),format='svg')
+        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1'),format='svg')
         # # plot the fig
         # plt.show()
 
