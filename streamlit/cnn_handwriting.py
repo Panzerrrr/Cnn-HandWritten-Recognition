@@ -30,8 +30,27 @@ from tensorflow.keras.utils import *
 
 import tensorflow as tf
 
-MODEL_DIR = os.path.join(os.path.dirname('__file__'), 'my_model.h5')
+MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),'my_model.h5')
 model = keras.models.load_model(MODEL_DIR)
+# st.write(MODEL_DIR)
+def make_prediction():
+    global new_img
+    global img
+
+    img = canvas_result.image_data
+    
+    image_data = Image.fromarray((img[:, :, 0]).astype(np.uint8))
+    image_data = image_data.resize((28, 28))
+    image_data = image_data.convert('L')
+    image_data = (tf.keras.utils.img_to_array(image_data)/255)
+    image_data = image_data.reshape(1,28,28,1)
+    new_img = tf.convert_to_tensor(image_data)
+
+    pred = model.predict(new_img)
+    print(pred)
+    print(np.argsort(pred))
+
+
 
 
 
@@ -65,149 +84,12 @@ canvas_result = st_canvas(
 )
 
 
-def make_prediction():
-    global new_img
-    global img
-    # predictions = model.predict([X_test]) 
-    # img = cv2.imread('../img/img.png')   
-    # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)    
-    # resize = cv2.resize(gray, (28,28),interpolation=cv2.INTER_AREA)
-    # IMG_SIZE = 28
-
-    # new_img = tf.keras.utils.normalize(resize,axis=1)
-    # new_img = np.array(new_img).reshape(-1,IMG_SIZE,IMG_SIZE,1)
-    # print(new_img.shape)
-    # pred = model.predict(new_img)
-    # print(pred)
-    # print(np.argsort(pred))
-
-
-    img = canvas_result.image_data
-    
-    image_data = Image.fromarray((img[:, :, 0]).astype(np.uint8))
-    image_data = image_data.resize((28, 28))
-    image_data = image_data.convert('L')
-    image_data = (tf.keras.utils.img_to_array(image_data)/255)
-    image_data = image_data.reshape(1,28,28,1)
-    new_img = tf.convert_to_tensor(image_data)
-    
-
-    # print(new_img.shape)
-    pred = model.predict(new_img)
-    print(pred)
-    print(np.argsort(pred))
-
-        # return new_img
-
-# def png_export():
-#     st.markdown(
-#         """
-#     Realtime update is disabled for this demo. 
-#     Press the 'Download' button at the bottom of canvas to update exported image.
-#     """
-#     )
-#     try:
-#         Path("../img/img").mkdir()
-#     except FileExistsError:
-#         pass
-
-#     # Regular deletion of tmp files
-#     # Hopefully callback makes this better
-#     now = time.time()
-#     N_HOURS_BEFORE_DELETION = 1
-#     for f in Path("../img/img").glob("*.png"):
-#         st.write(f, os.stat(f).st_mtime, now)
-#         if os.stat(f).st_mtime < now - N_HOURS_BEFORE_DELETION * 3600:
-#             Path.unlink(f)
-
-#     # button_id = st.session_state["button_id"]
-#     file_path = "../img/img.png"
-
-#     # custom_css = f""" 
-#     #     <style>
-#     #         #{button_id} {{
-#     #             display: inline-flex;
-#     #             align-items: center;
-#     #             justify-content: center;
-#     #             background-color: rgb(255, 255, 255);
-#     #             color: rgb(38, 39, 48);
-#     #             padding: .25rem .75rem;
-#     #             position: relative;
-#     #             text-decoration: none;
-#     #             border-radius: 4px;
-#     #             border-width: 1px;
-#     #             border-style: solid;
-#     #             border-color: rgb(230, 234, 241);
-#     #             border-image: initial;
-#     #         }} 
-#     #         #{button_id}:hover {{
-#     #             border-color: rgb(246, 51, 102);
-#     #             color: rgb(246, 51, 102);
-#     #         }}
-#     #         #{button_id}:active {{
-#     #             box-shadow: none;
-#     #             background-color: rgb(246, 51, 102);
-#     #             color: white;
-#     #             }}
-#     #     </style> """
-
-#     # data = st_canvas(update_streamlit=False, key="png_export")
-#     # if data is not None and data.image_data is not None:
-#     #     img_data = data.image_data
-#     #     im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
-#     #     im.save(file_path, "PNG")
-
-#     #     buffered = BytesIO()
-#     #     im.save(buffered, format="PNG")
-#     #     img_data = buffered.getvalue()
-#     #     try:
-#     #         # some strings <-> bytes conversions necessary here
-#     #         b64 = base64.b64encode(img_data.encode()).decode()
-#     #     except AttributeError:
-#     #         b64 = base64.b64encode(img_data).decode()
-
-#     #     dl_link = (f'<a download="{file_path}" href="data:file/txt;base64,{b64}">Export PNG</a><br></br>'
-#     #     )
-#     #     st.markdown(dl_link, unsafe_allow_html=True)
-
-
 # data = st_canvas(update_streamlit=False, key="png_export")
 file_path = "../img/img.png"
 
 if canvas_result.image_data is not None:
     img = canvas_result.image_data
     button_clicked = st.button('prediction',on_click=make_prediction())
-
-    # img_data = canvas_result.image_data
-    # im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
-    # im.save(file_path, "PNG")
-    # im.save('../img/img.png')
-
-    # buffered = BytesIO()
-    # im.save(buffered, format="PNG")
-    # img_data = buffered.getvalue()
-
-
-   
-    
-    # image_data = Image.fromarray((img[:, :, 0]).astype(np.uint8))
-    # image_data = image_data.resize((28, 28))
-    # image_data = image_data.convert('L')
-    # image_data = (tf.keras.utils.img_to_array(image_data)/255)
-    # image_data = image_data.reshape(1,28,28,1)
-    # test_x = tf.convert_to_tensor(image_data)
-    
-    
-    #Version CV2 non supporté par streamlit
-    #img2 = cv2.resize(canvas_result.image_data.astype('uint8'), (28, 28))
-    #img = img2
-    #img = img / 255.0
-    #img = img.reshape(-1,28,28,1)
-    #rescaled = cv2.resize(img2, (SIZE, SIZE), interpolation=cv2.INTER_NEAREST)
-    #st.write('Model Input')
-    # st.image(image_data)
-
-    
 
 
     if button_clicked:
@@ -380,39 +262,6 @@ if canvas_result.image_data is not None:
 
 
     ############################################## PLOT ###############################################################
-
-
-
-# def plot_nodes():
-
-#     for nodes in range(3):
-#         batch = new_img
-#         conv = model.layers[nodes]
-#         activation = conv(batch)
-#         # print(batch)
-#         print(conv)
-#         print(activation.shape)
-
-#         import matplotlib.pyplot as plt
-
-#         n_filters =6
-#         ix=1
-#         fig = plt.figure(figsize=(20,15))
-#         for i in range(20):
-#             # get the filters
-#             f = activation[:,:,:,i]
-#             for j in range(1):
-#                 # subplot for 6 filters and 3 channels
-#                 plt.subplot(1,20,ix)
-#                 plt.axis('off')
-#                 plt.imshow(f[j,:,:] ,cmap='gray')
-#                 ix+=1
-#         # save the fig
-#         plt.savefig("../img/fig/{model.layers.name}.png")
-#         # # plot the fig
-#         # plt.show()
-
-
 
 
 
