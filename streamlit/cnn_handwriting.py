@@ -29,7 +29,7 @@ from keras.models import load_model
 
 # load model after export
 
-import pickle
+import pickle   
 
 
 # predictions = model.predict([X_test])
@@ -64,7 +64,7 @@ import tensorflow as tf
 
 
 # print(np.argsort(pred))
-model = load_model('../notebook/my_model.h5')
+model = load_model('my_model.h5')
 
 
 
