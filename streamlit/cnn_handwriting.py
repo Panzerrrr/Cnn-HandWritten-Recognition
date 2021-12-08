@@ -51,6 +51,25 @@ def make_prediction():
     print(np.argsort(pred))
 
 
+def save_uploadedfile(uploadedfile):
+     with open(os.path.join("tempDir",uploadedfile.name),"wb") as f:
+         f.write(uploadedfile.getbuffer())
+     return st.success("Saved File:{} to tempDir".format(uploadedfile.name))
+
+
+# image_file = st.file_uploader("Upload An Image",type=['png','jpeg','jpg'])
+#     if image_file is not None:
+#         file_details = {"FileName":image_file.name,"FileType":image_file.type}
+#         st.write(file_details)
+#         img = load_image(image_file)
+#         st.image(img,height=250,width=250)
+#         with open(os.path.join("tempDir",image_file.name),"wb") as f: 
+#         f.write(image_file.getbuffer())         
+#         st.success("Saved File")
+
+
+
+        
 
 
 
@@ -84,12 +103,31 @@ canvas_result = st_canvas(
 )
 
 
+
+
+def load_image(image_file):
+    img = Image.open(image_file)
+    return img
+
 # data = st_canvas(update_streamlit=False, key="png_export")
 file_path = "../img/img.png"
 
 if canvas_result.image_data is not None:
     img = canvas_result.image_data
     button_clicked = st.button('prediction',on_click=make_prediction())
+
+
+
+
+
+    # # To See details
+    # file_details = {"filename":canvas_result, "filetype":canvas_result,
+    #                 "filesize":canvas_result}
+    # st.write(file_details)
+
+    # # To View Uploaded Image
+    # st.image(load_image(canvas_result.image_data),width=250)
+
 
 
     if button_clicked:
@@ -115,9 +153,17 @@ if canvas_result.image_data is not None:
                 plt.imshow(f[j,:,:] ,cmap='gray')
                 ix+=1
         # save the fig
-        plt.savefig("../img/fig/{model.layers.name[0]}.png")
+        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1.png'))
         # # plot the fig
         # plt.show()
+
+        # img_data = data.image_data
+        # im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
+        # im.save(file_path, "PNG")
+
+        # buffered = BytesIO()
+        # im.save(buffered, format="PNG")
+        # img_data = buffered.getvalue()
 
         st.write('predction en cours')
         image = Image.open('../img/fig/{model.layers.name[0]}.png')
