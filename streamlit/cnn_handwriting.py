@@ -69,11 +69,17 @@ import tensorflow as tf
 # model = load_model(MODEL_DIR)
 # model = load_model('my_model.h5')
 
-MODEL_DIR = os.path.join(os.path.dirname(__file__), 'my_model.h5')
-if not os.path.isdir(MODEL_DIR):
-    os.system(r'my_model.h5')
-model = load_model(r'my_model.h5')
+# MODEL_DIR = os.path.join(os.path.dirname(__file__), 'my_model.h5')
+# if not os.path.isdir(MODEL_DIR):
+#     os.system(r'my_model.h5')
+# model = load_model(r'my_model.h5')
 
+
+MODEL_DIR = os.path.join(os.path.dirname('__file__'), 'my_model.h5')
+if not os.path.isdir(MODEL_DIR):
+    os.system('runipy train.ipynb')
+
+model = load_model('my_model.h5')
 
 
 def make_prediction():
