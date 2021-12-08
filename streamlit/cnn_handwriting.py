@@ -1,7 +1,7 @@
 import pandas as pd
 from PIL import Image
 import streamlit as st
-import streamlit_drawable_canvas as st_canvas
+from streamlit_drawable_canvas import st_canvas
 import numpy as np
 from io import BytesIO
 from pathlib import Path
@@ -71,15 +71,31 @@ model = load_model('../notebook/my_model.h5')
 def make_prediction():
     global img
     global new_img
-    predictions = model.predict([X_test]) 
-    img = cv2.imread('../img/img.png')   
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)    
-    resize = cv2.resize(gray, (28,28),interpolation=cv2.INTER_AREA)
-    IMG_SIZE = 28
+    # predictions = model.predict([X_test]) 
+    # img = cv2.imread('../img/img.png')   
+    # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)    
+    # resize = cv2.resize(gray, (28,28),interpolation=cv2.INTER_AREA)
+    # IMG_SIZE = 28
 
-    new_img = tf.keras.utils.normalize(resize,axis=1)
-    new_img = np.array(new_img).reshape(-1,IMG_SIZE,IMG_SIZE,1)
-    print(new_img.shape)
+    # new_img = tf.keras.utils.normalize(resize,axis=1)
+    # new_img = np.array(new_img).reshape(-1,IMG_SIZE,IMG_SIZE,1)
+    # print(new_img.shape)
+    # pred = model.predict(new_img)
+    # print(pred)
+    # print(np.argsort(pred))
+
+
+    img = canvas_result.image_data
+    
+    image_data = Image.fromarray((img[:, :, 0]).astype(np.uint8))
+    image_data = image_data.resize((28, 28))
+    image_data = image_data.convert('L')
+    image_data = (tf.keras.utils.img_to_array(image_data)/255)
+    image_data = image_data.reshape(1,28,28,1)
+    new_img = tf.convert_to_tensor(image_data)
+    
+
+       # print(new_img.shape)
     pred = model.predict(new_img)
     print(pred)
     print(np.argsort(pred))
@@ -194,14 +210,35 @@ file_path = "../img/img.png"
 if canvas_result.image_data is not None:
     button_clicked = st.button('prediction',on_click=make_prediction())
 
-    img_data = canvas_result.image_data
-    im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
-    im.save(file_path, "PNG")
-    im.save('../img/img.png')
+    # img_data = canvas_result.image_data
+    # im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
+    # im.save(file_path, "PNG")
+    # im.save('../img/img.png')
 
-    buffered = BytesIO()
-    im.save(buffered, format="PNG")
-    img_data = buffered.getvalue()
+    # buffered = BytesIO()
+    # im.save(buffered, format="PNG")
+    # img_data = buffered.getvalue()
+
+
+    img = canvas_result.image_data
+    
+    image_data = Image.fromarray((img[:, :, 0]).astype(np.uint8))
+    image_data = image_data.resize((28, 28))
+    image_data = image_data.convert('L')
+    image_data = (tf.keras.utils.img_to_array(image_data)/255)
+    image_data = image_data.reshape(1,28,28,1)
+    # test_x = tf.convert_to_tensor(image_data)
+    
+    
+    #Version CV2 non supporté par streamlit
+    #img2 = cv2.resize(canvas_result.image_data.astype('uint8'), (28, 28))
+    #img = img2
+    #img = img / 255.0
+    #img = img.reshape(-1,28,28,1)
+    #rescaled = cv2.resize(img2, (SIZE, SIZE), interpolation=cv2.INTER_NEAREST)
+    #st.write('Model Input')
+    # st.image(image_data)
+
     
 
 
@@ -362,9 +399,9 @@ if canvas_result.image_data is not None:
 
     try:
         # some strings <-> bytes conversions necessary here
-        b64 = base64.b64encode(img_data.encode()).decode()
+        b64 = base64.b64encode(image_data.encode()).decode()
     except AttributeError:
-        b64 = base64.b64encode(img_data).decode()
+        b64 = base64.b64encode(image_data).decode()
 
     # dl_link = (f'<a download="{file_path}" onclick="{make_prediction()}" href="data:file/txt;base64,{b64}">Export PNG</a><br></br>'
     # )
