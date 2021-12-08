@@ -132,6 +132,25 @@ if canvas_result.image_data is not None:
 
     if button_clicked:
 
+
+        fig, ax = plt.subplots()
+        plt.axis("off")
+        ax.imshow(new_img[0], cmap=plt.get_cmap('gray'))
+        st.pyplot(fig)
+        # predictions = model.predict(new_img)
+        # plt.imshow(new_img)
+
+        # image0 = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod0.png'))
+        # st.image(
+        #     image0,
+        #     caption='0',)
+
+
+
+        # pixels = new_img
+        # # print(pixels.shape)
+        # plt.imshow(pixels)
+
         batch = new_img
         conv = model.layers[0]
         activation = conv(batch)
@@ -153,9 +172,10 @@ if canvas_result.image_data is not None:
                 plt.imshow(f[j,:,:] ,cmap='gray')
                 ix+=1
         # save the fig
-        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1.png'))
+        # plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1.png'))
         # # plot the fig
         # plt.show()
+        st.pyplot(fig)
 
         # img_data = data.image_data
         # im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
@@ -165,11 +185,11 @@ if canvas_result.image_data is not None:
         # im.save(buffered, format="PNG")
         # img_data = buffered.getvalue()
 
-        st.write('predction en cours')
-        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1.png'))
-        st.image(
-            image,
-            caption='mod1',)
+        # st.write('predction en cours')
+        # image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1.png'))
+        # st.image(
+        #     image,
+        #     caption='mod1',)
 
 
         conv1 = model.layers[1]
@@ -191,16 +211,17 @@ if canvas_result.image_data is not None:
                 plt.imshow(f[j,:,:] ,cmap='gray')
                 ix+=1
         # save the fig
-        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod2.png'))
+        # plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod2.png'))
         # # plot the fig
         # plt.show()
+        st.pyplot(fig)
 
 
 
-        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod2.png'))
-        st.image(
-            image,
-            caption='mod2',)
+        # image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod2.png'))
+        # st.image(
+        #     image,
+        #     caption='mod2',)
 
 
         conv3 = model.layers[2]
@@ -225,11 +246,12 @@ if canvas_result.image_data is not None:
         plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod3.png'))
         # # plot the fig
         # plt.show()
+        st.pyplot(fig)
 
-        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod3.png'))
-        st.image(
-            image,
-            caption='mod3',)
+        # image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod3.png'))
+        # st.image(
+        #     image,
+        #     caption='mod3',)
 
 
         conv3 = model.layers[3]
@@ -252,15 +274,16 @@ if canvas_result.image_data is not None:
                 plt.imshow(f[j,:,:] ,cmap='gray')
                 ix+=1
         # save the fig
-        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod4.png'))
+        # plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod4.png'))
         # # plot the fig
         # plt.show()
+        st.pyplot(fig)
 
 
-        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod4.png'))
-        st.image(
-            image,
-            caption='mod4',)
+        # image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod4.png'))
+        # st.image(
+        #     image,
+        #     caption='mod4',)
 
 
         conv4 = model.layers[4]
@@ -283,15 +306,16 @@ if canvas_result.image_data is not None:
                 plt.imshow(f[j,:,:] ,cmap='gray')
                 ix+=1
         # save the fig
-        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.png'))
+        # plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.png'))
         # # plot the fig
         # plt.show()
+        st.pyplot(fig)
 
 
-        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.png'))
-        st.image(
-            image,
-            caption='mod5',)
+        # image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.png'))
+        # st.image(
+        #     image,
+        #     caption='mod5',)
 
     try:
         # some strings <-> bytes conversions necessary here
