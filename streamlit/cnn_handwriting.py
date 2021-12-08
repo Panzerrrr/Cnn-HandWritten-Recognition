@@ -80,7 +80,7 @@ import tensorflow as tf
 #     os.system('runipy train.ipynb')
 
 model = os.path.join(os.path.dirname('__file__'), 'my_model.h5')
-mod = load_model('my_model.h5')
+# mod = load_model('my_model.h5')
 
 
 
