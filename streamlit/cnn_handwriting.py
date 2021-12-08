@@ -79,9 +79,8 @@ import tensorflow as tf
 # if not os.path.isdir(MODEL_DIR):
 #     os.system('runipy train.ipynb')
 
-model = load_model(os.path.join(os.path.dirname('__file__'), 'my_model.h5'))
-
-
+model = os.path.join(os.path.dirname('__file__'), 'my_model.h5')
+model = load_model(model)
 
 
 
