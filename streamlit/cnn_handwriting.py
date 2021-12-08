@@ -166,7 +166,7 @@ if canvas_result.image_data is not None:
         # img_data = buffered.getvalue()
 
         st.write('predction en cours')
-        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1.svg'),format='svg')
+        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1.svg'))
         st.image(
             image,
             caption='mod1',)
@@ -197,7 +197,7 @@ if canvas_result.image_data is not None:
 
 
 
-        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod2.svg'),format='svg')
+        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod2.svg'))
         st.image(
             image,
             caption='mod2',)
@@ -226,7 +226,7 @@ if canvas_result.image_data is not None:
         # # plot the fig
         # plt.show()
 
-        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod3.svg'),format='svg')
+        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod3.svg'))
         st.image(
             image,
             caption='mod3',)
@@ -257,7 +257,7 @@ if canvas_result.image_data is not None:
         # plt.show()
 
 
-        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod4.svg'),format='svg')
+        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod4.svg'))
         st.image(
             image,
             caption='mod4',)
@@ -288,7 +288,7 @@ if canvas_result.image_data is not None:
         # plt.show()
 
 
-        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.svg'),format='svg')
+        image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.svg'))
         st.image(
             image,
             caption='mod5',)
