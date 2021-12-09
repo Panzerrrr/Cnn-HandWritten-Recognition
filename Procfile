@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run cnn_handwriting.py
+web: sh setup.sh && streamlit run /app/streamlit/cnn_handwriting.py
