@@ -89,9 +89,6 @@ canvas_result = st_canvas(
 )
 
 
-# data = st_canvas(update_streamlit=False, key="png_export")
-file_path = "../img/img.png"
-
 if canvas_result.image_data is not None:
     img = canvas_result.image_data
     button_clicked = st.button('prediction',on_click=make_prediction())
@@ -309,10 +306,12 @@ if canvas_result.image_data is not None:
         p.b {{
         font-family:sans-serif;
         color:Green;
-        font-size: 42px;"
+        font-size: 42px;
         }}
+
         
         </style>
+
         <p class="b">Prédictions du Modéle</p>
         <p class="a">{np.argmax(pred)}</p>
 
@@ -331,13 +330,6 @@ if canvas_result.image_data is not None:
         b64 = base64.b64encode(new_img.encode()).decode()
     except AttributeError:
         b64 = base64.b64encode(new_img).decode()
-
-    # dl_link = (f'<a download="{file_path}" onclick="{make_prediction()}" href="data:file/txt;base64,{b64}">Export PNG</a><br></br>'
-    # )
-
-    
-    # st.markdown(dl_link, unsafe_allow_html=True)
-
 
 
     ############################################## PLOT ###############################################################
