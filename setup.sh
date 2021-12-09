@@ -1,7 +1,7 @@
 mkdir -p ~/.streamlit/echo "\
 [general]\n\
 email = \"nidalzaiani@gmail.com\"\n\
-" > ~/.streamlit/credentials.tomlecho "\
+" > ~/.streamlit/credentials.nidal "\
 [server]\n\
 headless = true\n\
 enableCORS=false\n\
