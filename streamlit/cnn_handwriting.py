@@ -14,7 +14,7 @@ import time
 import pandas as pd
 
 import matplotlib.pyplot as plt
-
+from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
 
 
@@ -36,6 +36,7 @@ model = keras.models.load_model(MODEL_DIR)
 def make_prediction():
     global new_img
     global img
+    global pred
 
     img = canvas_result.image_data
     
@@ -48,28 +49,13 @@ def make_prediction():
 
     pred = model.predict(new_img)
     print(pred)
-    print(np.argsort(pred))
+
 
 
 def save_uploadedfile(uploadedfile):
      with open(os.path.join("tempDir",uploadedfile.name),"wb") as f:
          f.write(uploadedfile.getbuffer())
      return st.success("Saved File:{} to tempDir".format(uploadedfile.name))
-
-
-# image_file = st.file_uploader("Upload An Image",type=['png','jpeg','jpg'])
-#     if image_file is not None:
-#         file_details = {"FileName":image_file.name,"FileType":image_file.type}
-#         st.write(file_details)
-#         img = load_image(image_file)
-#         st.image(img,height=250,width=250)
-#         with open(os.path.join("tempDir",image_file.name),"wb") as f: 
-#         f.write(image_file.getbuffer())         
-#         st.success("Saved File")
-
-
-
-        
 
 
 
@@ -79,9 +65,9 @@ def save_uploadedfile(uploadedfile):
 
 
 # Specify canvas parameters in application
-stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
-stroke_color = st.sidebar.color_picker("Stroke color hex: ")
-bg_color = st.sidebar.color_picker("Background color hex: ", "#eee")
+stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 25)
+stroke_color = st.sidebar.color_picker("Stroke color hex: ","#FFFFFF")
+bg_color = st.sidebar.color_picker("Background color hex: ", "#000000")
 bg_image = st.sidebar.file_uploader("Background image:", type=["png", "jpg"])
 drawing_mode = st.sidebar.selectbox(
     "Drawing tool:", ("freedraw", "line", "rect", "circle", "transform")
@@ -103,12 +89,6 @@ canvas_result = st_canvas(
 )
 
 
-
-
-def load_image(image_file):
-    img = Image.open(image_file)
-    return img
-
 # data = st_canvas(update_streamlit=False, key="png_export")
 file_path = "../img/img.png"
 
@@ -117,39 +97,24 @@ if canvas_result.image_data is not None:
     button_clicked = st.button('prediction',on_click=make_prediction())
 
 
-
-
-
-    # # To See details
-    # file_details = {"filename":canvas_result, "filetype":canvas_result,
-    #                 "filesize":canvas_result}
-    # st.write(file_details)
-
-    # # To View Uploaded Image
-    # st.image(load_image(canvas_result.image_data),width=250)
-
-
-
     if button_clicked:
 
 
-        fig, ax = plt.subplots()
-        plt.axis("off")
-        ax.imshow(new_img[0], cmap=plt.get_cmap('gray'))
-        st.pyplot(fig)
-        # predictions = model.predict(new_img)
-        # plt.imshow(new_img)
-
-        # image0 = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod0.png'))
-        # st.image(
-        #     image0,
-        #     caption='0',)
+        
+        progress_bar = st.progress(1)
+        for i in range(100):
+            progress_bar.progress(i + 1)
+            time.sleep(0.01)
 
 
+        viridis = plt.get_cmap('viridis', 256)
+        newcolors = viridis(np.linspace(0, 1, 256))
+        pink = np.array([248/256, 24/256, 148/256, 1])
+        newcolors[:25, :] = pink
+        newcmp = ListedColormap(newcolors)
 
-        # pixels = new_img
-        # # print(pixels.shape)
-        # plt.imshow(pixels)
+
+
 
         batch = new_img
         conv = model.layers[0]
@@ -158,70 +123,12 @@ if canvas_result.image_data is not None:
         print(conv)
         print(activation.shape)
 
-
-        n_filters =6
-        ix=1
-        fig = plt.figure(figsize=(20,15))
-        for i in range(20):
-            # get the filters
-            f = activation[:,:,:,i]
-            for j in range(1):
-                # subplot for 6 filters and 3 channels
-                plt.subplot(1,20,ix)
-                plt.axis('off')
-                plt.imshow(f[j,:,:] ,cmap='gray')
-                ix+=1
-        # save the fig
-        # plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1.png'))
-        # # plot the fig
-        # plt.show()
-        st.pyplot(fig)
-
-        # img_data = data.image_data
-        # im = Image.fromarray(img_data.astype("uint8"), mode="RGBA")
-        # im.save(file_path, "PNG")
-
-        # buffered = BytesIO()
-        # im.save(buffered, format="PNG")
-        # img_data = buffered.getvalue()
-
-        # st.write('predction en cours')
-        # image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod1.png'))
-        # st.image(
-        #     image,
-        #     caption='mod1',)
-
-
+        
         conv1 = model.layers[1]
         activation1 = conv1(activation)
         # print(batch)
         print(conv1)
         print(activation1.shape)
-
-        n_filters =6
-        ix=1
-        fig = plt.figure(figsize=(20,15))
-        for i in range(20):
-            # get the filters
-            f = activation1[:,:,:,i]
-            for j in range(1):
-                # subplot for 6 filters and 3 channels
-                plt.subplot(1,20,ix)
-                plt.axis('off')
-                plt.imshow(f[j,:,:] ,cmap='gray')
-                ix+=1
-        # save the fig
-        # plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod2.png'))
-        # # plot the fig
-        # plt.show()
-        st.pyplot(fig)
-
-
-
-        # image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod2.png'))
-        # st.image(
-        #     image,
-        #     caption='mod2',)
 
 
         conv3 = model.layers[2]
@@ -230,29 +137,6 @@ if canvas_result.image_data is not None:
         print(conv3)
         print(activation2.shape)
 
-        n_filters =6
-        ix=1
-        fig = plt.figure(figsize=(20,15))
-        for i in range(20):
-            # get the filters
-            f = activation2[:,:,:,i]
-            for j in range(1):
-                # subplot for 6 filters and 3 channels
-                plt.subplot(1,20,ix)
-                plt.axis('off')
-                plt.imshow(f[j,:,:] ,cmap='gray')
-                ix+=1
-        # save the fig
-        plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod3.png'))
-        # # plot the fig
-        # plt.show()
-        st.pyplot(fig)
-
-        # image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod3.png'))
-        # st.image(
-        #     image,
-        #     caption='mod3',)
-
 
         conv3 = model.layers[3]
         activation3 = conv3(activation2)
@@ -260,66 +144,11 @@ if canvas_result.image_data is not None:
         print(conv3)
         print(activation3.shape)
 
-
-        n_filters =6
-        ix=1
-        fig = plt.figure(figsize=(20,15))
-        for i in range(20):
-            # get the filters
-            f = activation3[:,:,:,i]
-            for j in range(1):
-                # subplot for 6 filters and 3 channels
-                plt.subplot(1,20,ix)
-                plt.axis('off')
-                plt.imshow(f[j,:,:] ,cmap='gray')
-                ix+=1
-        # save the fig
-        # plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod4.png'))
-        # # plot the fig
-        # plt.show()
-        st.pyplot(fig)
-
-
-        # image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod4.png'))
-        # st.image(
-        #     image,
-        #     caption='mod4',)
-
-
         conv4 = model.layers[4]
         activation4 = conv4(activation3)
         # print(batch)
         print(conv4)
         print(activation4.shape)
-
-
-        n_filters =6
-        ix=1
-        fig = plt.figure(figsize=(20,15))
-        for i in range(20):
-            # get the filters
-            f = activation4[:,:,:,i]
-            for j in range(1):
-                # subplot for 6 filters and 3 channels
-                plt.subplot(1,20,ix)
-                plt.axis('off')
-                plt.imshow(f[j,:,:] ,cmap='gray')
-                ix+=1
-        # save the fig
-        # plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.png'))
-        # # plot the fig
-        # plt.show()
-        st.pyplot(fig)
-
-
-        # image = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.png'))
-        # st.image(
-        #     image,
-        #     caption='mod5',)
-
-
-
-
 
         conv5 = model.layers[5]
         activation5 = conv5(activation4)
@@ -327,51 +156,174 @@ if canvas_result.image_data is not None:
         print(conv5)
         print(activation5.shape)
 
-
-        n_filters =6
+        n_filters =6    
         ix=1
-        fig = plt.figure(figsize=(20,15))
-        for i in range(20):
+        fig = plt.figure(figsize=(60,45))
+        for i in range(30):
             # get the filters
             f = activation5[:,:,:,i]
             for j in range(1):
                 # subplot for 6 filters and 3 channels
-                plt.subplot(1,20,ix)
-                plt.axis('off')
-                plt.imshow(f[j,:,:] ,cmap='gray')
+                plt.subplot(1,30,ix)
+                plt.axis('off') 
+                plt.imshow(f[j,:,:] ,cmap='viridis')
                 ix+=1
-        # save the fig
-        # plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.png'))
-        # # plot the fig
-        # plt.show()
         st.pyplot(fig)
 
 
+        # html_sdl = 
 
-        conv6 = model.layers[6]
-        activation5 = conv6(activation5)
-        # print(batch)
-        print(conv6)
-        print(activation5.shape)
+        st.text("\n")
+        st.text("\n")     
+        st.text("\n")
+        st.text("\n")
+
+        # st.markdown(html_sdl, unsafe_allow_html=True)
+
+        
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(50,35))
+        for i in range(25):
+            # get the filters
+            f = activation5[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,25,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='viridis')
+                ix+=1
+        st.pyplot(fig)
+
+
+        st.text("\n")
+        st.text("\n")
+
+
+
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(40,25))
+        for i in range(20):
+            # get the filters
+            f = activation4[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,20,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='viridis')
+                ix+=1
+        st.pyplot(fig)
+
+
+        
+        st.text("\n")
+        st.text("\n")
+
+
+
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(30,15))
+        for i in range(15):
+            # get the filters
+            f = activation3[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,15,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='viridis')
+                ix+=1
+        st.pyplot(fig)
+
+        
+        st.text("\n")
+        st.text("\n")
+
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(20,15))
+        for i in range(10):
+            # get the filters
+            f = activation2[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,10,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='viridis')
+                ix+=1
+        st.pyplot(fig)
+
+        
+        st.text("\n")
+        st.text("\n")
+
 
 
         n_filters =6
         ix=1
         fig = plt.figure(figsize=(20,15))
-        for i in range(20):
+        for i in range(5):
             # get the filters
-            f = activation5[:,:,:,i]
+            f = activation1[:,:,:,i]
             for j in range(1):
                 # subplot for 6 filters and 3 channels
-                plt.subplot(1,20,ix)
+                plt.subplot(1,5,ix)
                 plt.axis('off')
-                plt.imshow(f[j,:,:] ,cmap='gray')
+                plt.imshow(f[j,:,:] ,cmap='viridis')
                 ix+=1
-        # save the fig
-        # plt.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)),'mod5.png'))
-        # # plot the fig
-        # plt.show()
         st.pyplot(fig)
+
+        
+        st.text("\n")
+        st.text("\n")
+
+
+
+        n_filters =6
+        ix=1
+        fig = plt.figure(figsize=(20,15))
+        for i in range(2):
+            # get the filters
+            f = activation[:,:,:,i]
+            for j in range(1):
+                # subplot for 6 filters and 3 channels
+                plt.subplot(1,2,ix)
+                plt.axis('off')
+                plt.imshow(f[j,:,:] ,cmap='viridis')
+                ix+=1
+        st.pyplot(fig)
+
+
+        fig, ax = plt.subplots()
+        plt.axis("off")
+        ax.imshow(new_img[0], cmap=plt.get_cmap('viridis'))
+        st.pyplot(fig)
+
+
+        html_str = f"""
+        <style>
+        p.a {{
+        font: bold 30px Courier;
+        }}
+        p.b {{
+        font-family:sans-serif;
+        color:Green;
+        font-size: 42px;"
+        }}
+        
+        </style>
+        <p class="b">Prédictions du Modéle</p>
+        <p class="a">{np.argmax(pred)}</p>
+
+        <p class="b">Différente étapes de la prédiction </p>
+        <p class="a">{np.argsort(pred)}</p>
+        """
+
+        st.markdown(html_str, unsafe_allow_html=True)
+
+        st.balloons()
+
 
 
     try:
