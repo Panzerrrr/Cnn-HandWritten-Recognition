@@ -23,15 +23,13 @@ from matplotlib.colors import ListedColormap, LinearSegmentedColormap
      ################################################# PREDICT #########################################################
 
 
-from tensorflow import keras
-from tensorflow.keras.utils import *
+from tensorflow.keras.models import load_model
+from tensorflow.keras.utils import img_to_array
+from tensorflow import convert_to_tensor
 
-
-
-import tensorflow as tf
 
 MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),'my_model.h5')
-model = keras.models.load_model(MODEL_DIR)
+model = load_model(MODEL_DIR)
 # st.write(MODEL_DIR)
 def make_prediction():
     global new_img
@@ -43,9 +41,9 @@ def make_prediction():
     image_data = Image.fromarray((img[:, :, 0]).astype(np.uint8))
     image_data = image_data.resize((28, 28))
     image_data = image_data.convert('L')
-    image_data = (tf.keras.utils.img_to_array(image_data)/255)
+    image_data = (img_to_array(image_data)/255)
     image_data = image_data.reshape(1,28,28,1)
-    new_img = tf.convert_to_tensor(image_data)
+    new_img = convert_to_tensor(image_data)
 
     pred = model.predict(new_img)
     print(pred)
